@@ -1,7 +1,14 @@
 const searchButton = document.getElementById('button');
 const container = document.querySelector('.container');
 var dropdowns = document.getElementsByClassName("dropdown");
-const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+
+
+
+
+
+
+
 
 let videoCount = 0;
 
@@ -9,33 +16,8 @@ let videoCount = 0;
 
 
 
-const hideButton = document.getElementById('hide-button');
+
 const wrapper = document.querySelector('.wrapper');
-const header = document.querySelector('.header');
-const searchContainer = document.querySelector('.search-container');
-
-hideButton.addEventListener('click', function() {
-  header.classList.toggle('hidden');
-  searchContainer.classList.toggle('hidden');
-  wrapper.classList.toggle('hidden');
-});
-
-
-
-
-
-fullscreenBtn.addEventListener('click', () => {
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-  } else {
-    document.documentElement.requestFullscreen();
-  }
-});
-
-
-
-
-
 
 
 
@@ -169,5 +151,8 @@ searchButton.addEventListener('click', () => {
 const formContainer = document.querySelector('.form-container');
 container.style.marginTop = '0px'; // add some margin between the form and videos
 document.body.insertBefore(container, formContainer.nextSibling);
+
+
+
 
 
