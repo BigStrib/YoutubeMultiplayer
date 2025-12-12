@@ -1,0 +1,685 @@
+/* --- CSS Variables --- */
+:root {
+    --primary: #e50914;
+    --primary-hover: #ff1a1a;
+    --primary-dark: #b20710;
+    --bg-dark: #000000;
+    --bg-sidebar: #0a0a0a;
+    --bg-input: #141414;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --text-muted: #505050;
+    --border-color: #1a1a1a;
+    --sidebar-width: 320px;
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Global Resets --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #000;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Main Content --- */
+main {
+    min-height: 100vh;
+    width: 100%;
+    background: #000;
+}
+
+/* =========================================================
+   VIDEO GRID – 2 COLUMNS, ROWS = 50vh, NO GAPS
+   ========================================================= */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 per row */
+    grid-auto-rows: 50vh;                             /* each row half viewport height */
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+    gap: 0;                                           /* no gaps */
+}
+
+/* First video centered at top when only one exists,
+   but still same size as a quarter-screen (50vw x 50vh) */
+.video-grid.has-1 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+}
+.video-grid.has-1 > .video-item:first-child {
+    grid-column: 1 / span 2;
+    width: 50vw;
+    height: 50vh;
+}
+
+/* Hide scrollbars for grid itself; scroll is on page */
+.video-grid::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+.video-grid {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* --- Empty State --- */
+.empty-state {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.empty-state-content {
+    text-align: center;
+    color: var(--text-muted);
+    animation: fadeIn 0.5s ease;
+}
+
+.empty-state-content i.fa-film {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.3;
+}
+
+.empty-state-content h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.empty-state-content p {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+.empty-state-content p i {
+    color: var(--primary);
+    margin: 0 0.25rem;
+}
+
+.video-grid.has-videos .empty-state {
+    display: none;
+}
+
+/* =========================================================
+   VIDEO ITEM – FILL CELL, CLIP IFRAME
+   ========================================================= */
+.video-item {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-dark);
+    overflow: hidden;      /* clip oversized iframe */
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.video-item:hover {
+    z-index: 10;
+}
+
+/* --- Container for iframe --- */
+.video-responsive {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-dark);
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* =========================================================
+   YOUTUBE IFRAME – SMALL OVERSCALE TO HIDE 1PX SEAMS
+   (minimal zoom so controls don't look distorted)
+   ========================================================= */
+.video-responsive iframe {
+    position: absolute;
+    top: -1%;
+    left: -1%;
+    width: 102%;
+    height: 102%;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block;
+    background: #000;
+}
+
+/* =========================================================
+   CONTROLS OVERLAY
+   ========================================================= */
+.video-controls-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+    background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+    z-index: 10;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.video-item:hover .video-controls-overlay {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.video-controls-overlay button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.video-controls-overlay button:hover {
+    background: var(--primary);
+    transform: scale(1.1);
+}
+
+.move-btn {
+    cursor: grab;
+}
+.move-btn:active {
+    cursor: grabbing;
+}
+
+/* =========================================================
+   CONFIRM REMOVE OVERLAY (inside each video)
+   ========================================================= */
+.confirm-remove-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+    z-index: 20;
+}
+
+.video-item.show-confirm-remove .confirm-remove-overlay {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.confirm-remove-box {
+    background: rgba(10, 10, 10, 0.95);
+    border-radius: 12px;
+    padding: 16px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    min-width: 200px;
+}
+
+.confirm-remove-label {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.confirm-remove-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.confirm-remove-actions button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+/* Cancel icon (grey) */
+.confirm-cancel-btn {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e5e5e5;
+}
+.confirm-cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: scale(1.05);
+}
+
+/* OK/remove icon (red) */
+.confirm-ok-btn {
+    background: rgba(229, 9, 20, 0.15);
+    color: var(--primary);
+}
+.confirm-ok-btn:hover {
+    background: rgba(229, 9, 20, 0.3);
+    transform: scale(1.05);
+}
+
+/* =========================================================
+   DRAG AND DROP STATES
+   ========================================================= */
+.video-item.is-dragging {
+    z-index: 1000;
+    opacity: 0.8;
+    box-shadow: 0 0 0 3px var(--primary);
+}
+.video-item.is-dragging .video-responsive {
+    pointer-events: none;
+}
+
+.sortable-ghost {
+    opacity: 0.3 !important;
+    background: var(--bg-dark) !important;
+}
+.sortable-ghost::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 3px dashed var(--primary);
+    background: rgba(229, 9, 20, 0.15);
+    z-index: 100;
+}
+.sortable-ghost .video-responsive {
+    visibility: hidden;
+}
+
+/* =========================================================
+   SIDEBAR + UI
+   ========================================================= */
+.sidebar-trigger {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    z-index: 100;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 15px;
+}
+
+.sidebar-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary);
+    color: var(--text-primary);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(229, 9, 20, 0.4);
+    transition: all var(--transition-fast);
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.sidebar-trigger:hover .sidebar-toggle {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.sidebar-toggle:hover {
+    background: var(--primary-hover);
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 25px rgba(229, 9, 20, 0.5);
+}
+
+.sidebar-toggle:active {
+    transform: scale(0.95) !important;
+}
+
+body.sidebar-open .sidebar-trigger {
+    pointer-events: none;
+}
+body.sidebar-open .sidebar-toggle {
+    opacity: 0;
+}
+
+/* Sidebar container */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    z-index: 1001;
+    transform: translateX(-100%);
+    transition: transform var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+}
+body.sidebar-open .sidebar {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-primary);
+}
+
+.sidebar-header h2 i {
+    color: var(--primary);
+}
+
+.sidebar-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.sidebar-close:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+}
+
+.sidebar-content {
+    flex: 1;
+    padding: 24px 20px;
+    overflow-y: auto;
+}
+
+.sidebar-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+/* Input group */
+.input-group {
+    margin-bottom: 24px;
+}
+.input-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+.input-wrapper {
+    display: flex;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all var(--transition-fast);
+}
+.input-wrapper:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.15);
+}
+#url-input {
+    flex: 1;
+    padding: 14px 16px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+}
+#url-input::placeholder {
+    color: var(--text-muted);
+}
+#add-video-btn {
+    padding: 14px 18px;
+    background: var(--primary);
+    border: none;
+    color: var(--text-primary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+#add-video-btn:hover {
+    background: var(--primary-hover);
+}
+#add-video-btn:active {
+    background: var(--primary-dark);
+}
+
+/* Video count */
+.video-count {
+    background: var(--bg-input);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+}
+.video-count span {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Divider */
+.sidebar-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 24px 0;
+}
+
+/* Shortcuts */
+.shortcuts h3 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+.shortcut-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+.shortcut-item kbd {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    color: var(--text-primary);
+    min-width: 32px;
+    text-align: center;
+}
+
+/* Overlay */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-smooth);
+}
+body.sidebar-open .sidebar-overlay {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Toasts */
+.toast-message {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.toast-message i {
+    font-size: 18px;
+}
+.toast-message.success i {
+    color: #e50914;
+}
+.toast-message.error i {
+    color: var(--primary);
+}
+.toast-message.fade-out {
+    animation: toastOut 0.3s ease forwards;
+}
+
+/* Animations */
+@keyframes toastIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes toastOut {
+    from { opacity: 1; transform: translateX(-50%) translateY(0); }
+    to   { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .video-grid {
+        grid-template-columns: 1fr;  /* single column */
+        grid-auto-rows: 50vh;
+    }
+    .video-grid.has-1 > .video-item:first-child {
+        grid-column: auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        width: 100%;
+    }
+    .sidebar-trigger {
+        width: 70px;
+        height: 70px;
+        padding: 12px;
+    }
+    .sidebar-toggle {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+    .video-controls-overlay button {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+    }
+    .video-controls-overlay {
+        padding: 8px;
+    }
+    .video-grid {
+        grid-auto-rows: 25vh;  /* 4 videos fill height on mobile */
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+button:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}

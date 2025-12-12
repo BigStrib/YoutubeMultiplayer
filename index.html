@@ -1,75 +1,90 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Youtube Multiplayer</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-	
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@200&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
- 
-
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
-
-
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <link rel="preconnect" href="https://www.youtube.com">
 </head>
-  <body>
+<body>
 
- 
+    <!-- Sidebar Toggle - Bottom Left -->
+    <div class="sidebar-trigger" id="sidebar-trigger">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open menu">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
 
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-play-circle"></i>Youtube Multiplayer</h2>
+            <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="sidebar-content">
+            <div class="input-group">
+                <label for="url-input">Add Video</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="url-input" 
+                        placeholder="Paste YouTube URL..."
+                        aria-label="Video URL input"
+                        autocomplete="off"
+                        spellcheck="false"
+                    >
+                    <button id="add-video-btn" title="Add Video">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
 
-	<div class="header">
-	
-		<div class="header">
-			
-			  </div>
-		  
-		  
-			
+            <div class="video-count">
+                <span id="video-count-display">0</span> videos
+            </div>
 
+            <div class="sidebar-divider"></div>
 
+            <div class="shortcuts">
+                <h3>Keyboard Shortcuts</h3>
+                <div class="shortcut-item">
+                    <kbd>Shift</kbd>
+                    <span>Open menu</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Esc</kbd>
+                    <span>Close menu</span>
+                </div>
+            </div>
+        </div>
 
+        <div class="sidebar-footer">
+            <span>Youtube Multiplayer</span>
+        </div>
+    </aside>
 
-  </div>
-  
+    <!-- Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-				</div>
-			  </div>
-			</div>
-		  </div>
-		  
+    <!-- Main Content -->
+    <main>
+        <div id="video-grid-container" class="video-grid" role="list" aria-label="Video grid">
+            <div class="empty-state" id="empty-state">
+                <div class="empty-state-content">
+                    <i class="fas fa-film"></i>
+                    <h2>No Videos Yet</h2>
+                    <p>Hover bottom-left and click <i class="fas fa-plus"></i> or press <kbd style="background:#141414;padding:4px 8px;border-radius:4px;font-size:12px;">Shift</kbd></p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-
-
-		</div>
-		<div class="search-container">
-
-			<input type="text" id="search-bar" placeholder="Enter YouTube video URL...">
-			<button id="button"><span class="material-symbols-outlined">
-				add
-				</span></button>
-		  </div>
-		</div>
-
-		
-		
-
-
-
-
-
-
-		<div class="container">
-		
-		</div>
-			
-		
-       <div class="bottom"> </div>
-		<script src="script.js"></script>
-
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>
-
