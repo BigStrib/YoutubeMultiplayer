@@ -678,4 +678,25 @@ body.sidebar-open .sidebar-overlay {
 button:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
+
+}
+
+/* =========================================================
+   RESPONSIVE FIX – STACK VIDEOS WHEN SCREEN IS TOO NARROW
+   (keeps same visuals, same sizes, same UI)
+   ========================================================= */
+@media (max-width: 1100px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(auto-fit, 50vh);
+        justify-content: center;
+        align-content: start;
+    }
+
+    /* Ensure each video stays 16:9 */
+    .video-item {
+        aspect-ratio: 16 / 9;
+        height: auto;
+        max-height: 50vh;
+    }
 }
