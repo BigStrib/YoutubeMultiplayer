@@ -1,4 +1,4 @@
-/*! --- CSS Variables ---!*/
+/* --- CSS Variables --- */
 :root {
     --primary: #e50914;
     --primary-hover: #ff1a1a;
@@ -41,8 +41,24 @@ main {
     height: 100vh;
     width: 100%;
     background: #000;
-    overflow: hidden;
+   
 }
+
+a {
+  color:#e50914 ;
+   text-decoration:none;
+}
+
+a:hover {
+ font-weight: bold;
+}
+
+
+
+
+
+
+
 
 /* =========================================================
    VIDEO GRID – CSS Grid, 2x2 layout, centered, 100vh total
@@ -677,6 +693,66 @@ body.sidebar-open .sidebar-overlay {
     }
 }
 
+
+/* ========================
+   VIDEO LIMIT POPUP STYLES
+   ======================== */
+.video-limit-popup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.video-limit-content {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 25px 35px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 320px;
+    font-family: sans-serif;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.video-limit-content h2 {
+    margin-bottom: 10px;
+}
+
+.video-limit-content p {
+    margin-bottom: 20px;
+}
+
+.video-limit-ok-btn {
+    background: #e50914;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.video-limit-ok-btn:hover {
+    background: #ff1a1a;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -703,7 +779,3 @@ button:focus-visible {
         align-content: start;
     }
 }
-
-
-
-

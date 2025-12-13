@@ -157,37 +157,44 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ========================
        ADD VIDEO
        ======================== */
-    function addVideo() {
-        const inputUrl = urlInput.value.trim();
-        if (!inputUrl) {
-            shakeInput();
-            return;
-        }
-
-        const videoData = parseVideoUrl(inputUrl);
-        if (!videoData) {
-            shakeInput();
-            showToast('Invalid YouTube URL', 'error');
-            return;
-        }
-
-        const newVideo = createVideoElement(videoData);
-        newVideo.style.opacity = '0';
-        newVideo.style.transform = 'scale(0.95)';
-
-        videoGrid.appendChild(newVideo);
-
-        requestAnimationFrame(() => {
-            newVideo.style.transition = 'all 0.3s ease';
-            newVideo.style.opacity = '1';
-            newVideo.style.transform = 'scale(1)';
-        });
-
-        urlInput.value = '';
-        updateVideoCount();
-        closeSidebar();
-        showToast('Video added', 'success');
+  function addVideo() {
+    const inputUrl = urlInput.value.trim();
+    if (!inputUrl) {
+        shakeInput();
+        return;
     }
+
+    // Check video count
+    if (getVideoCount() >= 4) {
+        showVideoLimitPopup();
+        return;
+    }
+
+    const videoData = parseVideoUrl(inputUrl);
+    if (!videoData) {
+        shakeInput();
+        showToast('Invalid YouTube URL', 'error');
+        return;
+    }
+
+    const newVideo = createVideoElement(videoData);
+    newVideo.style.opacity = '0';
+    newVideo.style.transform = 'scale(0.95)';
+
+    videoGrid.appendChild(newVideo);
+
+    requestAnimationFrame(() => {
+        newVideo.style.transition = 'all 0.3s ease';
+        newVideo.style.opacity = '1';
+        newVideo.style.transform = 'scale(1)';
+    });
+
+    urlInput.value = '';
+    updateVideoCount();
+    closeSidebar();
+    showToast('Video added', 'success');
+}
+
 
     /* ========================
        UI HELPERS
@@ -234,15 +241,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Hotkeys: Shift toggles sidebar, Esc closes
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Shift' && document.activeElement !== urlInput) {
-            e.preventDefault();
-            toggleSidebar();
-        }
-        if (e.key === 'Escape' && isSidebarOpen()) {
-            closeSidebar();
-        }
-    });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Shift') {
+        e.preventDefault();
+        toggleSidebar(); // opens if closed, closes if open
+    }
+});
+
+
+
 
     /* ========================
        SORTABLE (Drag & Drop)
@@ -277,3 +284,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial
     updateVideoCount();
 });
+
+
+
+/* ========================
+   VIDEO LIMIT POPUP
+   ======================== */
+function showVideoLimitPopup() {
+    // Prevent multiple popups
+    if (document.querySelector('.video-limit-popup')) return;
+
+    const popup = document.createElement('div');
+    popup.className = 'video-limit-popup';
+    popup.innerHTML = `
+        <div class="video-limit-content">
+            <h2>Maximum Reached</h2>
+            <p>You can only add up to 4 videos at a time.</p>
+            <button class="video-limit-ok-btn">OK</button>
+        </div>
+    `;
+    document.body.appendChild(popup);
+
+    const okBtn = popup.querySelector('.video-limit-ok-btn');
+    okBtn.addEventListener('click', () => popup.remove());
+}
