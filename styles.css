@@ -64,31 +64,38 @@ main {
     padding: 0;
 }
 
-/* 1 video - single cell, centered */
+/* 1 video - single cell, top-aligned */
 .video-grid.has-1 {
     grid-template-columns: calc(50vh * 16 / 9);
     grid-template-rows: 50vh;
-    align-content: start;  /* move to top */
+    justify-content: center;  /* horizontal centering */
+    align-content: start;     /* top-align vertically */
 }
 
-
-/* 2 videos - single row */
+/* 2 videos - single row, top-aligned */
 .video-grid.has-2 {
     grid-template-columns: repeat(2, calc(50vh * 16 / 9));
     grid-template-rows: 50vh;
+    justify-content: center;  /* horizontal centering */
+    align-content: start;     /* top-align vertically */
 }
 
-/* 3 videos - 2 in first row, 1 centered in second */
+/* 3 videos - 2 in first row, 1 centered in second row, top-aligned */
 .video-grid.has-3 {
     grid-template-columns: repeat(2, calc(50vh * 16 / 9));
     grid-template-rows: repeat(2, 50vh);
+    justify-content: center;  /* horizontal centering */
+    align-content: start;     /* top-align vertically */
 }
 
-/* 4 videos - full 2x2 grid (default) */
+/* 4 videos - full 2x2 grid, top-aligned */
 .video-grid.has-4 {
     grid-template-columns: repeat(2, calc(50vh * 16 / 9));
     grid-template-rows: repeat(2, 50vh);
+    justify-content: center;  /* horizontal centering */
+    align-content: start;     /* top-align vertically */
 }
+
 
 /* Hide scrollbars */
 .video-grid::-webkit-scrollbar {
@@ -696,6 +703,7 @@ button:focus-visible {
         align-content: start;
     }
 }
+
 
 
 
