@@ -68,7 +68,9 @@ main {
 .video-grid.has-1 {
     grid-template-columns: calc(50vh * 16 / 9);
     grid-template-rows: 50vh;
+    align-content: start;  /* move to top */
 }
+
 
 /* 2 videos - single row */
 .video-grid.has-2 {
@@ -694,5 +696,6 @@ button:focus-visible {
         align-content: start;
     }
 }
+
 
 
