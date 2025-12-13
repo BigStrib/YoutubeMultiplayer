@@ -44,6 +44,7 @@ main {
    
 }
 
+
 a {
   color:#e50914 ;
    text-decoration:none;
@@ -52,6 +53,17 @@ a {
 a:hover {
  font-weight: bold;
 }
+
+/* mouse over link */
+a:hover {
+   color:#e50914 ;
+}
+
+/* selected link */
+a:active {
+   color:#e50914 ;
+} 
+
 
 
 
@@ -779,3 +791,4 @@ button:focus-visible {
         align-content: start;
     }
 }
+
