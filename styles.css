@@ -1,4 +1,4 @@
-/* --- CSS Variables --- */
+/*! --- CSS Variables ---!*/
 :root {
     --primary: #e50914;
     --primary-hover: #ff1a1a;
@@ -694,4 +694,5 @@ button:focus-visible {
         align-content: start;
     }
 }
+
 
